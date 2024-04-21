@@ -1,11 +1,11 @@
 'use client'
 import { Box, Stack, Typography } from '@mui/material';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const Preview = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = new URLSearchParams(document.location.search);
   const [topic, setTopic] = useState<any>();
 
   useEffect(() => {

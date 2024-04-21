@@ -11,7 +11,7 @@ import {
 import CardMedia from '@mui/material/CardMedia';
 import { format } from 'date-fns';
 import Link from 'next/link';
-import { useRouter, useSearchParams ,usePathname } from 'next/navigation';
+import { useRouter ,usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import useRequireAuth from '../../lib/use-require-auth';
 
@@ -27,7 +27,7 @@ type Topic = {
 const News = () => {
   const isLoggedIn = useRequireAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = new URLSearchParams(document.location.search);
   const pathName = usePathname();
   const [items, setItems] = useState<Topic[]>();
   const [pageCount, setPageCount] = useState<number>();
