@@ -25,16 +25,16 @@ jobs:
           echo "branch=$(echo $PR | jq -r '.ref')" >> $GITHUB_OUTPUT
           echo "sha=$(echo $PR | jq -r '.sha')" >> $GITHUB_OUTPUT
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ steps.get_branch.outputs.branch }}
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18.x'
 
       - name: CI Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: node_modules_cache_id
         env:
           cache-name: cache-node-modules
@@ -47,10 +47,10 @@ jobs:
         run: npm ci  
       - name: Build
         run: npm run build
-      - name: Zip artifact for upload
-        run: cd out && zip ../out.zip . -r
+      - name: Generate
+        run: npm run generate
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.get_branch.outputs.sha }}-${{ github.run_id }}
           path: out.zip
@@ -58,7 +58,7 @@ jobs:
       - name: Wait for Artifact download
         run: sleep 15
       - name: Webhook
-        uses: diverta/workflow-webhook@v2
+        uses: diverta/workflow-webhook@v3
         env:
           webhook_url: "https://wqwq.g.kuroco.app/direct/menu/github/"
           webhook_secret: "0e6e1ffebe3f2e05c8ed366c7c078027"
@@ -71,14 +71,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18.x'
     
       - name: CI Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: node_modules_cache_id
         env:
           cache-name: cache-node-modules
@@ -90,16 +90,16 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Zip artifact for upload
-        run: cd out && zip ../out.zip . -r
+      - name: Generate
+        run: npm run generate
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ github.sha }}-${{ github.run_id }}
           path: out.zip
           retention-days: 7
       - name: Webhook
-        uses: diverta/workflow-webhook@v2
+        uses: diverta/workflow-webhook@v3
         env:
           webhook_url: "https://wqwq.g.kuroco.app/direct/menu/github/"
           webhook_secret: "0e6e1ffebe3f2e05c8ed366c7c078027"
