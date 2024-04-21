@@ -56,7 +56,7 @@ const News = () => {
         setItems(data.list);
         setPageCount(data.pageInfo.totalPageCnt);
       });
-  }, [isLoggedIn, searchParams]);
+  }, [isLoggedIn]);
 
   if (!isLoggedIn) {
     return null;
